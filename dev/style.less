@@ -1,0 +1,591 @@
+/*!
+Theme Name: Joe Anstett is a theme
+Theme URI: http://joeanstett.com/
+Author: Joe Anstett and Randall Bruder
+Author URI: http://joeanstett.com/
+Description: Hot damn! It's a custom wordpress theme. Made from scratch, baby. 
+Version: 1.0.0
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: joeanstett
+Tags: portfolio, responsive, adaptive, barbecue sauce
+*/
+
+@import "reset.less";
+@import "flexbox.less";
+
+.font-face("Larsseit", "webfonts/larsseit");
+.font-face("Calibre", "webfonts/calibre-bold");
+
+
+/* ----------------------------------------------------------------------------------------------------------
+-- LESS Variables and Defaults ------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------- */
+
+@body-font:		"Larsseit", Helvetica, Arial, sans-serif;		// Body Font family
+@heading-font:	"Calibre", Helvetica, Arial, sans-serif;				// Heading font family
+
+@body-text-size:	16px;		// Body text size
+@body-text-color: #fff;
+
+body { background-color: #fff; }
+* { box-sizing: border-box; }
+html, body, #page, .site-content { height: 100%; @media (max-width: @max-width-mobile) { height: auto; } }
+
+
+body {
+	font-family: @body-font;
+	.font-size(@body-text-size);
+	color: @body-text-color;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+	font-family: @heading-font;
+}
+
+h1 { .font-size(35px, 1.1); padding-bottom: 10px; }
+h2 { .font-size(30px); padding-bottom: 10px; }
+h3 { .font-size(24px); padding-bottom: 10px; }
+h4 { .font-size(16px); }
+
+@media (max-width: @max-width-mobile) {
+	h1 { .font-size(35px); padding-bottom: 10px; }
+	h2 { .font-size(23px); padding-bottom: 10px; }
+	h3 { .font-size(19px); padding-bottom: 10px; }
+}
+
+h1, h2, h3 { & b, & strong { font-weight: normal; } }
+
+
+/* Responsive Variables */
+
+@max-width-mobile: 900px;
+@max-width-tablet: 1300px;
+
+
+/* ----------------------------------------------------------------------------------------------------------
+-- Both Headers ---------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------- */
+
+.site-header, .secondary-header {
+	/* position: fixed; */
+	/* height: 100%; */
+	/* top: 0;
+	bottom: 0; */
+	width: 40%;
+	
+	/* overflow: auto; */
+	
+	/* This is an attempt at linked scrolling. */
+	float: left;
+	min-height: 100%;
+	position: relative;
+	
+	@media (max-width: @max-width-tablet) {
+		width: 50%;
+	}
+	
+	@media (max-width: @max-width-mobile) {
+		width: 100%;
+		float: none;
+		position: relative;
+		height: auto;
+		
+		min-height: auto;
+		
+		// Override for the linkedScrolling jQuery
+		position: relative!important;
+		bottom:auto!important;
+	}
+	
+	
+	background-color: #000;
+	padding: 13px 20px;
+	
+	.site-title a {
+		text-decoration: none;
+		float: left;
+		color: inherit;
+		.font-size(21px); 
+		font-family: @heading-font; 
+	}
+	
+	#site-navigation {
+		float: right;
+		.font-size(9px);
+		
+		li {
+			display: inline-block;
+			&:after {
+				content: '/';
+				padding: 0 5px 0 8px;
+			}
+			&:last-child:after {
+				content: '';
+				padding: 0;
+			}
+		}
+		a {
+			color: inherit;
+			text-decoration: none;	
+			padding-bottom: 2px;
+			border-bottom: 2px rgba(0,0,0,0) solid;
+			.transition(0.1s, linear, border-bottom);
+			
+			.screen({&:hover {
+				border-bottom: 2px solid;
+			}});
+		}
+	}
+	
+}
+
+/* ----------------------------------------------------------------------------------------------------------
+-- Homepage Header Specific ---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------- */
+
+.site-header {
+	
+	#main-header-text {
+		/* Maybe should consider switching to flexbox, as it's already being used for the project grid. */
+		text-align: center;
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+		padding: 0 40px;
+		
+		@media (max-width: @max-width-mobile) {
+			position: relative;
+			clear: both;
+			transform: none;
+			top: auto;
+			padding: 40px 5px;
+		}
+		
+		h1 {
+			@media (max-width: @max-width-mobile) {
+				.font-size(25px, 1.2);
+				}
+		}
+		
+		a {
+			text-decoration: none;
+			border-bottom: 3px #fff solid;
+			color: #fff;
+			display: inline-block;
+			.transition(0.1s, linear, border-bottom);
+			
+			.touchscreen({
+				@media (max-width: @max-width-mobile) {
+					display: inline;
+				}
+			});
+			
+			.screen({&:hover {
+				border-bottom: 3px #000 solid;
+			}});
+		}
+		
+	}
+	
+	#main-header-arrow {
+		font-family: @heading-font; 
+		.font-size(45px);
+		display: none;
+		
+		@media (max-width: @max-width-mobile) {
+			display: block;
+			text-align: center;
+		}
+	}
+}
+
+/* ----------------------------------------------------------------------------------------------------------
+-- Secondary Header Speific ---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------- */
+
+.secondary-header {
+
+	.site-branding {
+		min-height: 100vh;
+		@media (max-width: @max-width-mobile) { min-height: auto; }
+		height: auto !important;
+		height: 100%;
+		margin-bottom: -73px; // Height of the #home_button, plus the top and bottom padding on .secondary-header / .site-header
+		&:after {
+			content: '';
+			display: block;
+			height: 73px;
+		}
+	}
+
+	#home_button a {
+		/* position: absolute;
+		bottom: 19px;
+		left: 21px; */
+
+		text-decoration: none;
+		color: inherit;
+		.font-size(11px);
+		
+		margin-bottom: 15px;
+		height: 47px;
+
+		@media (max-width: @max-width-mobile) { display: none; }
+
+		padding-bottom: 1px;
+		border-bottom: 2px rgba(0,0,0,0) solid;
+		.transition(0.1s, linear, border-bottom);
+		.screen({&:hover {
+			border-bottom: 2px solid;		
+		}});
+	}
+}
+
+/* ----------------------------------------------------------------------------------------------------------
+-- Project Grid ---------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------- */
+
+#projects-grid {
+	margin-left: 40%;
+	@media (max-width: @max-width-tablet) {
+		margin-left: 50%;
+	}
+	@media (max-width: @max-width-mobile) {
+		margin-left: 0;
+	}
+	
+	
+	.project-square {
+		width: 50%;
+		position: relative;
+		float: left;
+		cursor: pointer;
+		overflow: hidden;
+		
+		@media (max-width: @max-width-tablet) {
+			width: 100%;
+			float: left;
+		}
+		
+		@media (max-width: @max-width-mobile) {
+			width: 100%;
+			float: none;
+		}
+		
+		border-left: 3px solid #fff;
+		border-bottom: 3px solid #fff;
+		
+		// Fixes flexbox issue on older versions of Safari
+		a { display: block; }
+		
+		/* Removes the border on the last two project squares. The 2 in the line below should match the number of columns. */
+		&:nth-last-of-type(-n+2) { border-bottom: none; }
+		/* And an override for the second to last element, only if there's an odd number of projects. */
+		&:nth-last-child(2):nth-child(even) { border-bottom: 3px solid #fff; }
+		
+		@media (max-width: @max-width-tablet) {
+			border-bottom: 3px solid #fff !important;
+			&:last-child {
+				border-bottom: none !important;
+			}
+		}
+		
+		@media (max-width: @max-width-mobile) {
+			border-left: none;
+			border-bottom: none !important;
+			border-top: 3px solid #fff;
+		}
+		
+		&:after {
+			content: "";
+			display: block;
+			padding-bottom: 100%;
+		}
+		
+		.screen({&:hover .project-square-bg {
+			opacity: 1;
+		}});
+		
+		.screen({&:hover .project-square-inner {
+			opacity: 0;
+		}});
+
+	}
+	
+	.project-square-inner {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		padding: 40px;
+		@media (max-width: @max-width-mobile) { padding: 10px; }
+		
+		.transition(0.1s);
+		
+		.flex-display();
+		.align-items(center);
+		.flex-direction(column);
+		.justify-content(center);
+		
+		text-align: center;
+		
+		h1 {
+			line-height: 0.9;
+		}
+		h4 {
+			padding-top: 10px;
+			.font-size(10px);
+		}
+	}
+	
+	.project-square-bg {
+		background-size: auto 100% !important;
+		background-position: left center;
+		background-repeat: no-repeat !important;
+		
+		opacity: 0;
+		
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;	
+		height: 100%;
+			
+		.transition(0.1s, linear, opacity);
+		
+		.touchscreen({
+			opacity: 0 !important;
+		});
+			
+		}
+		
+		@keyframes project-square-bg-animation {
+			0% { background-position-x: left; }
+			100% { background-position-x: right; }
+		}
+	
+	
+}
+
+/* ----------------------------------------------------------------------------------------------------------
+-- Project Area ---------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------- */
+
+
+#project-details {
+	clear: both;
+	padding: 70px 10% 40px;
+	@media (max-width: @max-width-mobile) { padding: 40px 0 10px; }
+	
+	.entry-title {
+		line-height: 1;
+		margin-bottom: 20px;
+		@media (max-width: @max-width-mobile) { .font-size(25px, 1); }
+	}
+
+	.project-description {
+		p {
+			color: inherit;
+			.font-size(12px, 1.5); /*FIXED*/
+			@media (max-width: @max-width-mobile) {
+				.font-size(11px, 1.5); /*FIXED*/
+			}
+			margin-bottom: 30px;
+			&:last-child {
+				margin-bottom: 0;
+			}
+		}
+		a {
+			color: inherit;
+			text-decoration: none;
+			border-bottom: 2px solid;
+			.transition(0.1s, linear, border-bottom);
+			.screen({&:hover {
+				border-bottom: 2px rgba(0,0,0,0) solid;
+			}});
+		}
+		
+		/* Contact form styling */
+		
+		input[type="text"], input[type="email"], textarea {
+			width: 100%;
+			.transition(0.1s, linear, all);
+			&:focus {
+				color: #000;
+				background-color: #fff;
+			}
+		}
+		
+		input, textarea {
+			-webkit-appearance: none;
+			-webkit-border-radius: 0; 
+			border-radius: 0;
+			outline: none;
+			border: 2px solid #fff;
+			background: #000;
+			color: #fff;
+			font-family: @body-font;
+			.font-size(12px);
+			padding: 9px 11px 7px 11px;
+		}
+		
+		input[type="submit"]{
+			cursor: pointer;
+			.transition(0.1s, linear, all);
+			.screen({&:hover {
+				color: #000;
+				background-color: #fff;
+			}});
+		}
+		
+		.wpcf7-validation-errors {
+			margin: 0;
+			padding: 10px 10px 7px 10px;
+			.font-size(12px);
+			border: 2px solid red;
+		}
+		.wpcf7-not-valid-tip {
+			margin-top: 5px;
+		}
+
+	}
+}
+
+.project-area {
+	background-color: #fff;
+	margin-left: 40%;
+	min-height: 100%;
+	color: #000;
+	
+	
+	@media (max-width: @max-width-tablet) {
+		margin-left: 50%;
+	}
+	
+	@media (max-width: @max-width-mobile) {
+		margin-left: 0;
+		min-height: auto;
+	}
+	
+	.site-main {
+		padding: 3px 3px 0.1px;
+		
+		.entry-content {
+			img {
+				width: 100%;
+				height: auto;
+				display: block;
+				margin-bottom: 3px;
+			}
+		}
+	}
+}
+
+.mobile-footer {
+	display: none;
+	@media (max-width: @max-width-mobile) { display: block; }
+	
+	padding: 23px 20px;
+	.font-size(9px);
+	a {
+		color: inherit;
+		text-decoration: none;
+		padding-bottom: 1px;
+		border-bottom: 2px rgba(0,0,0,0) solid;
+		.transition(0.1s, linear, border-bottom);
+		.screen({&:hover {
+			border-bottom: 2px solid;		
+		}});
+	}
+}
+
+/* ----------------------------------------------------------------------------------------------------------
+-- Page -----------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------- */
+
+
+.page-content-area {
+	background-color: #fff;
+	margin-left: 40%;
+	padding: 3px 3px 0.1px;
+	
+	@media (max-width: @max-width-tablet) {
+		margin-left: 50%;
+	}
+	
+	@media (max-width: @max-width-mobile) {
+		margin-left: 0;
+	}
+	
+	min-height: 100%;
+	color: #000;
+	img {
+		width: 100%;
+		height: auto;
+		display: block;
+		margin-bottom: 3px;
+	}
+}
+
+/* ----------------------------------------------------------------------------------------------------------
+-- Extras ----------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------- */
+
+// Video full width responsive
+
+.embed-container {
+	position: relative;
+	padding-bottom: 56.25%;
+	height: 0;
+	overflow: hidden;
+	max-width: 100%;
+	margin-bottom: 3px;
+	@media (max-width: @max-width-mobile) {
+		
+	}
+}
+.embed-container iframe, .embed-container object, .embed-container embed {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+/* ----------------------------------------------------------------------------------------------------------
+-- LESS Mixins ----------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------- */
+
+.font-face(@fontname, @fontfile, @fontweight:normal, @fontstyle:normal) {
+  @font-face {
+	font-family: "@{fontname}";
+	src: url("@{fontfile}.eot");
+	src: url("@{fontfile}.eot?#iefix") format("embedded-opentype"),
+		 url("@{fontfile}.woff") format("woff");
+	font-weight: @fontweight;
+	font-style: @fontstyle;
+  }
+}
+
+.font-size(@size, @leading:1.3){
+	@rem-value: (@size / 10);
+	@px-value: @size;
+	line-height: @leading;
+	font-size: unit(@px-value,px);
+	font-size: unit(@rem-value,rem);
+}
+
+.transition(@duration:0.2s, @ease:linear, @property:all) {
+	-webkit-transition: @property @duration @ease;
+	-moz-transition: @property @duration @ease;
+	-o-transition: @property @duration @ease;
+	transition: @property @duration @ease;
+}
+
+.touchscreen(@rules) {
+  html.touchevents &  { @rules(); }
+}
+.screen(@rules) {
+  html.no-touchevents &  { @rules(); }
+}
